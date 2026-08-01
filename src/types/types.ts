@@ -1,0 +1,72 @@
+import { z } from 'zod'
+
+export const CURRENCY_TO_FLAG_CODE = {
+  AED: 'ae',
+  ARS: 'ar',
+  AUD: 'au',
+  BDT: 'bd',
+  BGN: 'bg',
+  BHD: 'bh',
+  BRL: 'br',
+  CAD: 'ca',
+  CHF: 'ch',
+  CLP: 'cl',
+  CNY: 'cn',
+  COP: 'co',
+  CZK: 'cz',
+  DKK: 'dk',
+  EGP: 'eg',
+  EUR: 'eu',
+  GBP: 'gb',
+  HKD: 'hk',
+  HNL: 'hn',
+  HRK: 'hr',
+  HTG: 'ht',
+  HUF: 'hu',
+  IDR: 'id',
+  INR: 'in',
+  ISK: 'is',
+  JOD: 'jo',
+  JPY: 'jp',
+  KES: 'ke',
+  KRW: 'kr',
+  KWD: 'kw',
+  LBP: 'lb',
+  LKR: 'lk',
+  MAD: 'ma',
+  MXN: 'mx',
+  MYR: 'my',
+  NGN: 'ng',
+  NOK: 'no',
+  NPR: 'np',
+  NZD: 'nz',
+  OMR: 'om',
+  PEN: 'pe',
+  PHP: 'ph',
+  PKR: 'pk',
+  PLN: 'pl',
+  QAR: 'qa',
+  RON: 'ro',
+  RUB: 'ru',
+  SAR: 'sa',
+  SEK: 'se',
+  SGD: 'sg',
+  THB: 'th',
+  TRY: 'tr',
+  TWD: 'tw',
+  UAH: 'ua',
+  USD: 'us',
+  VND: 'vn',
+  ZAR: 'za',
+} as const
+
+export type CurrencyCode = keyof typeof CURRENCY_TO_FLAG_CODE
+export type FlagCode = (typeof CURRENCY_TO_FLAG_CODE)[CurrencyCode]
+
+export const CurrencyCodeSchema = z.enum(
+  Object.keys(CURRENCY_TO_FLAG_CODE) as [CurrencyCode, ...CurrencyCode[]],
+)
+
+export const FlagCodeSchema = z.enum(
+  Array.from(new Set(Object.values(CURRENCY_TO_FLAG_CODE))) as [FlagCode, ...FlagCode[]],
+)

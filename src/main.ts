@@ -1,9 +1,13 @@
 import './assets/main.css'
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 import App from './App.vue'
 import PrimeVue from 'primevue/config'
 import Aura from '@primeuix/themes/aura'
+
 const app = createApp(App)
+const pinia = createPinia()
+
 app.use(PrimeVue, {
   license: import.meta.env.VITE_PRIMEUI_LICENSE_KEY,
   theme: {
@@ -13,6 +17,6 @@ app.use(PrimeVue, {
     },
   },
 })
-app.mount('#app')
+app.use(pinia)
 
-console.log(import.meta.env.VITE_PRIMEUI_LICENSE_KEY)
+app.mount('#app')

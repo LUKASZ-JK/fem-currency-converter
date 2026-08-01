@@ -1,37 +1,19 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const dotBefore = "before:content-['·'] before:mx-2 first:before:content-none"
+
+defineProps<{
+  supportedCount: number
+}>()
+</script>
 
 <template>
-  <header>
+  <header class="flex w-full items-center p-6">
     <img src="@/assets/images/logo.svg" alt="FX Checker" />
     <!-- Dynamic: number of available currencies, e.g. "55" -->
-    <div class="text-preset-4">
-      <span>55 Currencies</span>
-      <span>EOD</span>
-      <span>ECB data</span>
-    </div>
+    <ul class="text-preset-4 mr-0 ml-auto flex items-center text-neutral-200">
+      <li :class="dotBefore">{{ supportedCount }} Currencies</li>
+      <li :class="dotBefore">EOD</li>
+      <li :class="dotBefore">ECB data</li>
+    </ul>
   </header>
 </template>
-
-<style scoped>
-header {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  padding: 0 1.5rem;
-}
-div {
-  color: var(--neutral-200);
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-  margin-right: -0.5rem;
-}
-span {
-  display: block;
-  margin-right: 0.5rem;
-}
-span + span::before {
-  content: '·';
-  margin-right: 0.5rem;
-}
-</style>

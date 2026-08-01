@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import LiveTicker from './components/LiveTicker.vue'
 import LogoHeader from './components/LogoHeader.vue'
 </script>
 
 <template>
-  <LogoHeader />
-  <main>
-    <!--
+  <div class="flex min-h-screen flex-col">
+    <LogoHeader :supported-count="55" />
+    <main>
+      <!--
   This file holds the static written content from the design so you don't have to
   retype it. It is intentionally unstructured — building the HTML is your job.
 
@@ -18,105 +20,101 @@ import LogoHeader from './components/LogoHeader.vue'
   than capital letters in the markup — all-caps text can be read out awkwardly by
   some screen readers. Acronyms and codes (FX, EOD, ECB, USD, EUR…) stay as-is.
 -->
-    <div>
-      <!-- Live markets ticker — auto-scrolls across the page, pauses on hover -->
+      <LiveTicker />
+      <div>
+        <!-- Converter -->
 
-      Live markets
+        Check the rate Send
+        <!-- Dynamic: amount to convert (number input, defaults to 1,000) -->
+        <!-- Dynamic: selected "send" currency — flag + code; opens the currency picker -->
 
-      <!-- Dynamic: scrolling list of currency pairs, each with its rate and 24h change (▲ up / ▼ down) -->
+        <!-- Swap the send and receive currencies (icon button) -->
 
-      <!-- Converter -->
+        Receive
+        <!-- Dynamic: converted amount -->
+        <!-- Dynamic: selected "receive" currency — flag + code; opens the currency picker -->
 
-      Check the rate Send
-      <!-- Dynamic: amount to convert (number input, defaults to 1,000) -->
-      <!-- Dynamic: selected "send" currency — flag + code; opens the currency picker -->
+        <!-- Dynamic: exchange rate for the active pair, e.g. "1 USD = 0.8530 EUR" -->
 
-      <!-- Swap the send and receive currencies (icon button) -->
+        <!-- Favorite toggle for the active pair — reads "Favorite" when unpinned, "Favorited" when pinned -->
+        Favorite Favorited Log conversion
 
-      Receive
-      <!-- Dynamic: converted amount -->
-      <!-- Dynamic: selected "receive" currency — flag + code; opens the currency picker -->
+        <!-- Currency picker — popover opened from either currency button -->
 
-      <!-- Dynamic: exchange rate for the active pair, e.g. "1 USD = 0.8530 EUR" -->
+        Search currencies... Popular
+        <!-- Dynamic: number of popular currencies -->
+        <!-- Dynamic: popular currencies, each row: flag, code, name (a checkmark marks the selected one) -->
 
-      <!-- Favorite toggle for the active pair — reads "Favorite" when unpinned, "Favorited" when pinned -->
-      Favorite Favorited Log conversion
+        Other currencies
+        <!-- Dynamic: number of other currencies -->
+        <!-- Dynamic: every other currency, each row: flag, code, name -->
 
-      <!-- Currency picker — popover opened from either currency button -->
+        <!-- Dynamic: while searching, the list filters to the currencies matching the query -->
 
-      Search currencies... Popular
-      <!-- Dynamic: number of popular currencies -->
-      <!-- Dynamic: popular currencies, each row: flag, code, name (a checkmark marks the selected one) -->
+        <!-- Tabs — collapse into a dropdown on mobile -->
 
-      Other currencies
-      <!-- Dynamic: number of other currencies -->
-      <!-- Dynamic: every other currency, each row: flag, code, name -->
+        History Compare Favorites
+        <!-- Dynamic: number of favorited pairs (badge) -->
+        Log
+        <!-- Dynamic: number of logged conversions (badge) -->
 
-      <!-- Dynamic: while searching, the list filters to the currencies matching the query -->
+        <!-- Tab panel: History (default tab) -->
 
-      <!-- Tabs — collapse into a dropdown on mobile -->
+        Open
+        <!-- Dynamic: opening rate for the selected range -->
+        Last
+        <!-- Dynamic: latest rate -->
+        Change
+        <!-- Dynamic: change over the range (signed; positive green, negative red) -->
+        % change
+        <!-- Dynamic: percentage change over the range (▲/▼; positive green, negative red) -->
 
-      History Compare Favorites
-      <!-- Dynamic: number of favorited pairs (badge) -->
-      Log
-      <!-- Dynamic: number of logged conversions (badge) -->
+        <!-- Date range selector -->
+        1d 1w 1m 3m 1y 5y
 
-      <!-- Tab panel: History (default tab) -->
+        <!-- Dynamic: active pair, e.g. "USD/EUR" -->
+        <!-- Dynamic: latest rate and timestamp, e.g. "0.8530 · May 14 16:00 CET" -->
+        <!-- Dynamic: line + area chart of the pair's rate history, with Y-axis (high/mid/low) and X-axis date labels -->
 
-      Open
-      <!-- Dynamic: opening rate for the selected range -->
-      Last
-      <!-- Dynamic: latest rate -->
-      Change
-      <!-- Dynamic: change over the range (signed; positive green, negative red) -->
-      % change
-      <!-- Dynamic: percentage change over the range (▲/▼; positive green, negative red) -->
+        <!-- History empty / error state -->
+        No chart data available We couldn't load rate history for [pair] right now. This usually
+        clears up in a minute.
 
-      <!-- Date range selector -->
-      1d 1w 1m 3m 1y 5y
+        <!-- Tab panel: Compare -->
 
-      <!-- Dynamic: active pair, e.g. "USD/EUR" -->
-      <!-- Dynamic: latest rate and timestamp, e.g. "0.8530 · May 14 16:00 CET" -->
-      <!-- Dynamic: line + area chart of the pair's rate history, with Y-axis (high/mid/low) and X-axis date labels -->
+        Multi-currency
+        <!-- Dynamic: send amount and base currency, e.g. "1,000 from USD" -->
+        <!-- Dynamic: number of comparison rows, e.g. "8 pairs" -->
 
-      <!-- History empty / error state -->
-      No chart data available We couldn't load rate history for [pair] right now. This usually
-      clears up in a minute.
+        <!-- Dynamic: one row per currency, each: flag, code, name, converted amount, reference rate (e.g. "@ 0.7366"), and a star to pin/unpin -->
 
-      <!-- Tab panel: Compare -->
+        <!-- Compare empty state -->
+        No comparison available Enter an amount in Send above to see what your money is worth in
+        other currencies.
 
-      Multi-currency
-      <!-- Dynamic: send amount and base currency, e.g. "1,000 from USD" -->
-      <!-- Dynamic: number of comparison rows, e.g. "8 pairs" -->
+        <!-- Tab panel: Favorites (pinned pairs, saved in the browser) -->
 
-      <!-- Dynamic: one row per currency, each: flag, code, name, converted amount, reference rate (e.g. "@ 0.7366"), and a star to pin/unpin -->
+        Pinned pairs
+        <!-- Dynamic: number of pinned pairs, e.g. "10 favorites" -->
 
-      <!-- Compare empty state -->
-      No comparison available Enter an amount in Send above to see what your money is worth in other
-      currencies.
+        <!-- Dynamic: one row per pinned pair, each: pair (e.g. "USD → EUR"), live rate, 24h change %, and a filled star to unpin -->
 
-      <!-- Tab panel: Favorites (pinned pairs, saved in the browser) -->
+        <!-- Favorites empty state -->
+        No pinned pairs yet Pin a pair to track its rate here. Tap the star icon on any conversion
+        or comparison row.
 
-      Pinned pairs
-      <!-- Dynamic: number of pinned pairs, e.g. "10 favorites" -->
+        <!-- Tab panel: Log (conversion history, saved in the browser) -->
 
-      <!-- Dynamic: one row per pinned pair, each: pair (e.g. "USD → EUR"), live rate, 24h change %, and a filled star to unpin -->
+        Conversion log
+        <!-- Dynamic: number of logged conversions, e.g. "8 logged" -->
+        Clear all
 
-      <!-- Favorites empty state -->
-      No pinned pairs yet Pin a pair to track its rate here. Tap the star icon on any conversion or
-      comparison row.
+        <!-- Dynamic: one row per logged conversion, each: relative time (e.g. "20m", "1h", "13 May"), pair, send amount, receive amount, and a delete button -->
 
-      <!-- Tab panel: Log (conversion history, saved in the browser) -->
-
-      Conversion log
-      <!-- Dynamic: number of logged conversions, e.g. "8 logged" -->
-      Clear all
-
-      <!-- Dynamic: one row per logged conversion, each: relative time (e.g. "20m", "1h", "13 May"), pair, send amount, receive amount, and a delete button -->
-
-      <!-- Log empty state -->
-      No conversions logged yet Every conversion is recorded here automatically when you tap Log
-      conversion. Your log is private to this session and this browser.
-    </div>
-  </main>
+        <!-- Log empty state -->
+        No conversions logged yet Every conversion is recorded here automatically when you tap Log
+        conversion. Your log is private to this session and this browser.
+      </div>
+    </main>
+  </div>
 </template>
